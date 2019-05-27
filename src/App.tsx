@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { connect } from 'simpply';
+import { connect, Dispatch } from 'simpply';
 import List from './List';
+import { User } from './StorageEntities/users';
+import { GlobalStorage, State } from './StorageEntities';
 
-const App = ({ users, dispatch, ...rest }) => {
+const App = ({ users, dispatch, ...rest }: { users: User[], dispatch: Dispatch<GlobalStorage> } & JSX.IntrinsicElements['div']) => {
   const [user, setUser] = useState('');
 
   return (
@@ -52,8 +54,6 @@ const App = ({ users, dispatch, ...rest }) => {
   );
 };
 
-const mapStateToProps = state => ({
+export default connect((state: State) => ({
   users: state.users
-});
-
-export default connect(mapStateToProps)(App);
+}))(App);
